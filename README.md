@@ -19,12 +19,14 @@
 
 ## 2. 프로젝트 구조
 
+### 2.1 디렉토리 구조
 ```
 mlops/
 ├── data/
 │   └── cifar10/          # CIFAR10 데이터셋
 ├── models/
 │   └── cifar10_model.py  # 모델 아키텍처 정의
+├── report/               # 분석 및 문서 폴더
 ├── serving_model/
 │   └── cifar10_training_pipeline/  # 저장된 모델
 ├── tflite_model/
@@ -36,6 +38,21 @@ mlops/
 ├── Dockerfile            # TF Serving 도커파일
 └── requirements.txt      # 프로젝트 의존성
 ```
+
+### 2.2 파이썬 파일 설명
+| 파일명 | 설명 |
+|--------|------|
+| `models/cifar10_model.py` | - CNN 기반 이미지 분류 모델 아키텍처 정의<br>- KerasTuner를 위한 HyperModel 클래스 구현<br>- 베이스라인 모델 구현 |
+| `data_preparation.py` | - CIFAR10 데이터셋 다운로드<br>- 이미지 전처리 및 정규화<br>- NumPy 형식으로 데이터 저장 |
+| `download_dataset.py` | - 데이터셋 다운로드 자동화<br>- 전처리된 데이터 저장 관리<br>- 데이터 디렉토리 구조 생성 |
+| `download_model.py` | - 학습된 모델 다운로드 템플릿<br>- 다양한 클라우드 스토리지 지원<br>- 모델 저장 관리 |
+| `main.py` | - 모델 학습 파이프라인 실행<br>- 하이퍼파라미터 튜닝 수행<br>- 최적 모델 저장 |
+| `convert_to_tflite.py` | - SavedModel을 TFLite 형식으로 변환<br>- 모델 최적화 및 양자화<br>- 변환된 모델 검증 |
+| `test_model_serving.py` | - 모델 서빙 테스트<br>- REST API 기반 추론<br>- 예측 결과 시각화 |
+| `analyze_results.py` | - 모델 성능 분석<br>- 혼동 행렬 생성<br>- 클래스별 정확도 분석 |
+| `pipeline/pipeline.py` | - TFX 파이프라인 정의<br>- 컴포넌트 구성 및 연결<br>- 파이프라인 실행 설정 |
+| `pipeline/transform.py` | - 데이터 전처리 로직 정의<br>- TensorFlow Transform 구현<br>- 특성 변환 파이프라인 |
+| `pipeline/trainer.py` | - 모델 학습 로직 구현<br>- 하이퍼파라미터 튜닝 설정<br>- 모델 저장 및 서명 정의 |
 
 ## 3. 구현 과정
 
